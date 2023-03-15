@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
-    "name": "Reading time",
+    "name": "Translate Tool",
     "version": "1.0",
-    "description": "Add the reading time to Chrome Extension documentation articles",
+    "description": "Using OpenAI api to translate the website",
     "action": {
         "default_icon": "scenery.png",
         "default_popup": "/scripts/popup.html",
