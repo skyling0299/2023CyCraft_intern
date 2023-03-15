@@ -191,6 +191,51 @@ With the new model ```GPT-4```, it can have 200 request per mininute, despite it
                 
                 * 翻譯的結果達到我認為及格的標準，約 8-9 成的文字能夠成功被翻譯成中文。
             
-                * 由於已經寫了選取文字翻譯的功能，剩下的文字也能夠透過選取來做補強
+                * 選取文字翻譯的功能，也能夠補強剩下翻譯錯誤與無法翻譯的部分
+    
+2.  CSP Problem
+
+    * 問題描述:
+    
+        剛開始並未設想到後端，僅認為可在 ```Content.js```頁面完成所有請求與回應，因此使用 [Webpack]("") 作為工具，將 node.js 的 module 與原本的 javascript 打包並嘗試使用 OpenAI api。
+        
+    * 問題難點:
+        
+        1. 根據 CSP 的原則，Webpack 打包後的 ```eval``` 是不被允許的，因此我更改了 ``` webpack.config.js ``` ，使用 ```source map``` 輸出。
+        
+        2. 解決 CSP 的問題後，OpenAI 可能發現我是透過前端直接發送 API KEY，因此發出錯誤訊息
+        ```
+        Refused to set unsafe header "User-Agent"
+        ```
+        
+    * 解決方法:
+        
+        重新閱讀作業要求發現特別提到 **backend engine**，因此著手架設後端。在前後端串接完成後，Open AI api 也運作順利。
+        
+    * 延伸與問題:
+        
+        考慮到若進度良好，想發展成建立固定的 server 並持續運作，如此一來其他人想要使用這個 extension 就更容易了，只需要將前端載入 ```chrome://extensions``` 並輸入API KEY 就可以開始使用，不需要安裝 ```node.js``` 以及其他套件
+            
+        於是我使用校內閒置機器建立了一個 container 來跑我的 server 端，遇到了 ```block mixed content problem``` ，將 http 改為 https 後成功運作。
+        
+        後來並沒有使用這台機器的原因是因為進行管理的工程過於浩大，在時間緊迫、沒有設立資料庫也對加密沒有研究的情況下我不敢貿然嘗試，不過這段小插曲依舊給我留下了深刻的印象。
+        
+
+### To be improved
+    
+    
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
  
  
