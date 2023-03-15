@@ -6,10 +6,15 @@ import fs from 'fs'
 import os from 'os'
 
 dotenv.config({ override: true });
-let configuration = new Configuration({
-    apiKey: process.env.OPENAI_API_KEY,
-});
-let openai = new OpenAIApi(configuration);
+
+let openai;
+if(process.env.OPENAI_API_KEY != "YOUR_API_KEY"){
+    const configuration = new Configuration({
+        apiKey: process.env.OPENAI_API_KEY,
+    });
+    openai = new OpenAIApi(configuration);
+}
+
 
 function setEnvValue(key, value) {
 
@@ -19,6 +24,10 @@ function setEnvValue(key, value) {
     }));
     ENV_VARS.splice(target, 1, `${key} = "${value}"`);
     fs.writeFileSync("./.env", ENV_VARS.join(os.EOL));
+    const configuration = new Configuration({
+        apiKey: process.env.OPENAI_API_KEY,
+    });
+    openai = new OpenAIApi(configuration);
 }
 
 
@@ -33,7 +42,7 @@ app.get('/set', function (req, res) {
 app.post('/set', async(req, res) =>{
     console.log(req.body.key.content)
     setEnvValue("OPENAI_API_KEY", req.body.key.content);
-    configuration = new Configuration({
+    const configuration = new Configuration({
         apiKey: process.env.OPENAI_API_KEY,
     });
     openai = new OpenAIApi(configuration);
@@ -44,7 +53,6 @@ app.post('/', async(req, res) => {
   
     try{
         const prompts = req.body.prompt
-
         const response = await openai.createCompletion({
             model: "text-davinci-002", 
             prompt: prompts,
@@ -57,15 +65,24 @@ app.post('/', async(req, res) => {
                 })
             }
             else{
-                res.status(500).send('Something went wrong')
+                return Promise.reject
+            }
+        }).catch((e)=>{
+            if(e.response.status == 401){
+                res.status(401).send(e.response.statusText)
+            }
+            else if(e.response.status == 429){
+                res.status(429).send(e.response.statusText)
+            }
+            else{
+                res.status(500).send(e)
             }
         })
     }
     catch(e){
         console.log(e)
-        
-        res.status(500).send(e || 'Something went wrong')
     }
+    
 })
 
 app.listen(5000, ()=>console.log("server 5000"))

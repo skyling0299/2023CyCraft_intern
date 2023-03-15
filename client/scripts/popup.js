@@ -1,13 +1,11 @@
 document.addEventListener("DOMContentLoaded", function(){
-    console.log("hihi")
     document.getElementById("save").addEventListener("click", async()=>{
         key = document.getElementById("apiKey")
-        console.log(key.value)
         if(key.value.length > 49){
             const apiKey = key.value
             key.value = ""
             chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {  
-                chrome.tabs.sendMessage(tabs[0].id, { content: apiKey }, function(response) {  
+                chrome.tabs.sendMessage(tabs[0].id, { id: "key" , content: apiKey }, function(response) {  
                     console.log(response);  
                 });  
             });  
@@ -17,6 +15,13 @@ document.addEventListener("DOMContentLoaded", function(){
             key.value = ""
             key.setAttribute("placeholder", "NOT VALID")
         }
+    })
+    document.getElementById("translate").addEventListener("click", async()=>{
+        chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {  
+            chrome.tabs.sendMessage(tabs[0].id, { id:"translate", content: "translate" }, function(response) {  
+                console.log(response);  
+            });  
+        });  
     })
 })
 

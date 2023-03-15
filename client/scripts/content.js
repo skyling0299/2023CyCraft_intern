@@ -1,33 +1,26 @@
 const body = document.querySelector("body");
 
-// chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {  
-//     console.log(message);  
-//     fetch('https://localhost/set', {
-//         method: 'POST',
-//         headers: {
-//         'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify({
-//             'key': message,
-//         })
-//     }) 
-//     sendResponse({content: "來自事件腳本的回覆"});  
-// });
-
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {  
     console.log(message);  
-    fetch('http://localhost:5000/set', {
-        method: 'POST',
-        headers: {
-        'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            'key': message,
+    if(message.id == "translate" ){
+        if(body){
+            const NodeList = getTextNodeList(body)
+            translateNodeList(NodeList)
+        }
+    }
+    else if(message.id == "key")
+        fetch('http://localhost:5000/set', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                'key': message,
+            })
+        }).then((res)=>{
+            console.log(res)
+            sendResponse({ status: res});  
         })
-    }).then((res)=>{
-        console.log(res)
-        sendResponse({ status: res});  
-    })
 });
 function getTextNodeList(dom){
     const NodeList = []
@@ -67,7 +60,6 @@ function getTextNodeList(dom){
         
     }
     return NodeOfWeb
-
 }
 function translateNodeList(list){
 
@@ -81,29 +73,24 @@ function translateNodeList(list){
                 content.push(String(element.nodeValue).trim())
                 subList.push(element)
             }
-            
             if(wordCount > 1000){
-                console.log(content)
                 wordCount = 0
                 translatingRequest(content, subList)
-                
                 content = []
                 subList = []
             }       
         }
     })
-    if(content.length > 0){
+    if(subList.length > 0){
         translatingRequest(content, subList)
     }
 
 }
 function generatePrompt(prompt){
-
     return `Translate the following sentence from any languages to traditional Chinese:\n ${prompt.join("\n")} \n`
 }
 
 async function translatingRequest(content, subList){
-    console.log(content, subList)
     /* do openai api */
     let translate = await fetch('http://localhost:5000/', {
         method: 'POST',
@@ -119,43 +106,49 @@ async function translatingRequest(content, subList){
             return data
         }
         else{
-            let data = response.statusText
-            return data
+            return Promise.reject
         }
     }).then((function(data){
         let parsed = []
         try{
             parsed = data.translated.text.trim().split('\n')
-            
             replaceTranslatedNodes(parsed, subList, content)
             return parsed //get string successfull
         }
         catch(e){
-            console.log("please wait for while, 429 error")
-            //return parsed
+            return Promise.reject
         }
-    }))
-    return translate
+    })).catch(err=>{
+        if(response.status == 401){
+            console.log(response.statusText)
+            console.log(err)
+        }
+        else{
+            console.log(err)
+        }
+    })
 }
 function replaceTranslatedNodes(content, nodeList, original){
     console.log(content)
     console.log(nodeList)
     if(content){
-        if(content.length == nodeList.length){
+        if(content.length === nodeList.length){
             for(let i = 0; i< nodeList.length; i++){
                 try{
                     nodeList[i].nodeValue = content[i]
                 }
                 catch(e){
-                    nodeList[i] = '0'
+                    console.log(e)
                 }
             }
         }
-        else if(original.length>1){
-            console.log(original.slice(Math.floor(original.length/2)+1, original.length), nodeList.slice(Math.floor(nodeList.length/2)+1, nodeList.length))
+        else if(nodeList.length > 1){
+            console.log(original.length)
+            console.log(original, nodeList) 
             translatingRequest(original.slice(0, Math.floor(original.length/2)), nodeList.slice(0, Math.floor(nodeList.length/2)))
-            translatingRequest(original.slice(Math.floor(original.length/2)+1, original.length), nodeList.slice(Math.floor(nodeList.length/2)+1, nodeList.length))
+            translatingRequest(original.slice(Math.floor(original.length/2), original.length), nodeList.slice(Math.floor(nodeList.length/2), nodeList.length))
         }
+        
         
     }
     
@@ -250,9 +243,6 @@ function addIcon(selection, text){
 
 
 if (body) {
-    const NodeList = getTextNodeList(body)
-    translateNodeList(NodeList)
-    
     document.addEventListener("mouseup", () => {
         const selected = getSelectedText();
         const selectedText = selected.toString()
