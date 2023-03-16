@@ -6,6 +6,9 @@ A [**Chrome Extension**](https://developer.chrome.com/docs/extensions/) designed
 - translate the user selected content to traditional Chinese
 - using [**OPENAI API**](https://platform.openai.com/docs) to do translation
 
+<img src="https://github.com/skyling0299/https://github.com/skyling0299/2023CyCraft_intern/blob/backend_ver/assets/translate.gif" width='100%' height='100%'/>
+<img src="https://github.com/skyling0299/https://github.com/skyling0299/2023CyCraft_intern/blob/backend_ver/assets/selected.gif" width='100%' height='100%'/>
+
 ## Overview
 
 ## How To Use
@@ -14,7 +17,7 @@ A [**Chrome Extension**](https://developer.chrome.com/docs/extensions/) designed
 
 * Your computer should have downloaded [Node.js](https://nodejs.org/en) before（Node >= 14.0.0 and npm >= 5.6）
 
-* Download this repository via `git clone` or from [Releases](https://github.com/5j54d93/Dcard-2022-Web-Frontend-Intern-Homework/releases)
+* Download this repository via `git clone` or from [Releases]("https://github.com/skyling0299/2023CyCraft_intern/blob/release")???
 
 ```shell
 git clone 
@@ -62,7 +65,7 @@ Due to the project translate the content using OpenAI, user have to generate a k
 
 3. fill in the key into the input blank
 
-insert the picture of how to generate key here
+<img src="https://github.com/skyling0299/https://github.com/skyling0299/2023CyCraft_intern/blob/backend_ver/assets/popup.gif" width='100%' height='100%'/>
 
 
 ## Architecture Design & Explanation
@@ -70,7 +73,7 @@ insert the picture of how to generate key here
 
 #### popup : for user update and input apikey of OpenAI and translate the website
 
-[popup.js]("")
+[popup.js]("https://github.com/skyling0299/https://github.com/skyling0299/2023CyCraft_intern/blob/backend_ver/scripts/popup.js")
 
 * Listen to two click event
 
@@ -79,11 +82,11 @@ insert the picture of how to generate key here
   
 * the message and key will be sent to ```content.js``` by chrome extension's api  ```chrome.tabs.sendMessage```
  
-[popup.html](""): layout of popup
+[popup.html]("https://github.com/skyling0299/https://github.com/skyling0299/2023CyCraft_intern/blob/backend_ver/scripts/popup.html"): layout of popup
 
 insert the gifs here
 
-#### [content.js]("")
+#### [content.js]("https://github.com/skyling0299/https://github.com/skyling0299/2023CyCraft_intern/blob/backend_ver/scripts/content.js")
 
 1. collect DOM nodes, get selection text, show the translate result
 
@@ -142,13 +145,13 @@ With the new model ```GPT-4```, it can have 200 request per mininute, despite it
     
         * 問題描述:  
         
-        剛開始對於翻譯的構想是可以將翻譯完的文字放回原本的位置(取代原本的語言        )，因此一開始我想傳入 array 物件  
+        剛開始對於翻譯的構想是可以將翻譯完的文字放回原本的位置(取代原本的語言)，因此一開始我想傳入 array 物件  
         
         根據[Open AI documet of parameters]("https://platform.openai.com/docs/api-reference/completions/create") 以及 [Open AI error mitigation]("https://platform.openai.com/docs/guides/rate-limits/error-mitigation")     這兩個文件，我認為可以嘗試傳入物件，回傳的物件將會是 array ，如此一來對照 DOM     節點與翻譯出來的文字節點就能無誤差的把 Open AI 翻譯的結果帶回網頁。
  
         * 問題難點:
         
-            1. 第一個碰上的問題是 ```429 too many request```，根據文件描述，使用 batch             發送的資料將會算在同一筆 request 中，但實測結果是 Open AI 的一個 batch 中的句子數量(發送的請求)最大為20筆 (prompt.length <= 20, 20 是每分鐘請求最大上限數)，並沒有達到我想要個別翻譯的目標
+            1. 第一個碰上的問題是 ```429 too many request```，根據文件描述，使用 batch發送的資料將會算在同一筆 request 中，但實測結果是 Open AI 的一個 batch 中的句子數量(發送的請求)最大為20筆 (prompt.length <= 20, 20 是每分鐘請求最大上限數)，並沒有達到我想要個別翻譯的目標
             
             2. 另一個問題點是我無法計算 max_token 的值應該設為多少，在 batching 中將分開生成回應， max_token 獨立計算。
             
@@ -169,7 +172,7 @@ With the new model ```GPT-4```, it can have 200 request per mininute, despite it
             >
             > 句子
             
-            反而是一起發送(不使用 batch )的翻譯可度性更高
+            反而是一起發送(不使用 batch)的翻譯可度性更高
             
             4. 而如此做法其實與每搜尋到一段文字便發送一個請求是相同的，請求數並沒有有效的降低(最理想狀況為 文章節點數/20)，不是我認為比較好的解法
 
@@ -213,7 +216,7 @@ With the new model ```GPT-4```, it can have 200 request per mininute, despite it
 
     * 問題描述:
     
-        剛開始並未設想到後端，僅認為可在 ```Content.js```頁面完成所有請求與回應，因此使用 [Webpack]("") 作為工具，將 node.js 的 module 與原本的 javascript 打包並嘗試使用 OpenAI api。
+        剛開始並未設想到後端，僅認為可在 ```Content.js```頁面完成所有請求與回應，因此使用 [Webpack]("https://webpack.js.org/") 作為工具，將 node.js 的 module 與原本的 javascript 打包並嘗試使用 OpenAI api。
         
     * 問題難點:
         
@@ -266,7 +269,7 @@ With the new model ```GPT-4```, it can have 200 request per mininute, despite it
         
         同時也不美觀，僅堪用而已。
         
-        若時間允許，將加急更改 layout ，力求美觀一些
+        最後尚有一點時間，套了一點 bootstrap 的 css 在 ```popup.html```頁面中。
         
 2. Back End
 
@@ -304,3 +307,5 @@ Chrome Extension 是完全沒有接觸過的領域，閱讀文件時發現好在
 * 3/13 building popup page, let user fill in api key
 * 3/14 Optimize the original translation
 * 3/15 writing README file
+* 3/16 fix api key storage, fix logical bugs
+* 3/17 push release v1.0, FINISH
