@@ -23,7 +23,14 @@ document.addEventListener("DOMContentLoaded", function(){
             });  
         });  
     })
+    document.getElementById("link").addEventListener("click", ()=>{
+        window.open(
+            'https://platform.openai.com/account/api-keys',
+            '_blank'
+        );
+    })
 })
+
 
 chrome.action.onClicked.addListener(function(tab) {
     chrome.action.setTitle({tabId: tab.id, title: "You are on tab:" + tab.id});
