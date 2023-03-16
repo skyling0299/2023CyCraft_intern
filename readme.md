@@ -45,7 +45,7 @@ cd
 cd server
 ```
 
-3. Run this React app
+3. Run the server
 
 ```shell
 npm install
@@ -56,7 +56,7 @@ node index.js
 
 #### client side
 
-3. By following the document in [Chrome extentions]("https://developer.chrome.com/docs/extensions/mv3/getstarted/development-basics/#load-unpacked"), setting up the extension environment
+3. By following the document in [Chrome extentions](https://developer.chrome.com/docs/extensions/mv3/getstarted/development-basics/#load-unpacked), setting up the extension environment
 
 ##### Setting up Chrome extension :
 
@@ -72,7 +72,7 @@ node index.js
 
 Due to the project translate the content using OpenAI, user have to generate a key to use the extension.
 
-1. go to [OpenAI api-keys]("https://platform.openai.com/account/api-keys") and click ```create new secret key ```
+1. go to [OpenAI api-keys](https://platform.openai.com/account/api-keys) and click ```create new secret key ```
 
 2. copy the key and click the extension icon
 
@@ -86,7 +86,7 @@ Due to the project translate the content using OpenAI, user have to generate a k
 
 #### popup : for user update and input apikey of OpenAI and translate the website
 
-[popup.js]("https://github.com/skyling0299/https://github.com/skyling0299/2023CyCraft_intern/blob/backend_ver/scripts/popup.js")
+[popup.js](https://github.com/skyling0299/https://github.com/skyling0299/2023CyCraft_intern/blob/backend_ver/scripts/popup.js)
 
 * Listen to two click event
 
@@ -144,7 +144,7 @@ the max token is 2049 in OpenAI model ```davinci-002```
 
 ### Rate Limit
 
-OpenAI has [rate limit]("https://platform.openai.com/docs/guides/rate-limits/overview") of 60 request per minute, and max token per minute according to the model.  
+OpenAI has [rate limit](https://platform.openai.com/docs/guides/rate-limits/overview) of 60 request per minute, and max token per minute according to the model.  
 
 Accourding the recommended soloution on the document, it says we can use exponential backoff to retry the request. During the development, I rarely encounter rate limit, so it is not **very neccessary** to me to solve the problem.  
 With the new model ```GPT-4```, it can have 200 request per mininute, despite it can not be used now, but the rate limit may increase in the future.
@@ -159,7 +159,7 @@ With the new model ```GPT-4```, it can have 200 request per mininute, despite it
         
         剛開始對於翻譯的構想是可以將翻譯完的文字放回原本的位置(取代原本的語言)，因此一開始我想傳入 array 物件  
         
-        根據[Open AI documet of parameters]("https://platform.openai.com/docs/api-reference/completions/create") 以及 [Open AI error mitigation]("https://platform.openai.com/docs/guides/rate-limits/error-mitigation")     這兩個文件，我認為可以嘗試傳入物件，回傳的物件將會是 array ，如此一來對照 DOM節點與翻譯出來的文字節點就能無誤差的把 Open AI 翻譯的結果帶回網頁。
+        根據[Open AI documet of parameters](https://platform.openai.com/docs/api-reference/completions/create) 以及 [Open AI error mitigation]("https://platform.openai.com/docs/guides/rate-limits/error-mitigation) 這兩個文件，我認為可以嘗試傳入物件，回傳的物件將會是 array ，如此一來對照 DOM節點與翻譯出來的文字節點就能無誤差的把 Open AI 翻譯的結果帶回網頁。
  
         * 問題難點:
         
@@ -279,9 +279,7 @@ With the new model ```GPT-4```, it can have 200 request per mininute, despite it
         helper.style.top =  window.pageYOffset + oRect.top*0.9  + "px";
         ```
         
-        同時也不美觀，僅堪用而已。
-        
-        最後尚有一點時間，套了一點 bootstrap 的 css 在 ```popup.html```頁面中。
+        同時也不美觀，僅堪用而已，完成這份專案後最後尚有一點時間，於是我套了一點 bootstrap 的 css 在 ```popup.html```頁面中。
         
 2. Back End
 
