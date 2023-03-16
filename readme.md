@@ -7,6 +7,8 @@ A [**Chrome Extension**](https://developer.chrome.com/docs/extensions/) designed
 - using [**OPENAI API**](https://platform.openai.com/docs) to do translation
 
 <img src="https://github.com/skyling0299/2023CyCraft_intern/blob/main/assets/translate.gif" width='100%' height='100%'/>
+
+
 <img src="https://github.com/skyling0299/2023CyCraft_intern/blob/main/assets/selected.gif" width='100%' height='100%'/>
 
 ## Overview
@@ -26,7 +28,7 @@ A [**Chrome Extension**](https://developer.chrome.com/docs/extensions/) designed
 
 ### On Your Computer
 
-* Your computer should have downloaded [Node.js](https://nodejs.org/en) before（Node >= 14.0.0 and npm >= 5.6）
+* Your computer should have downloaded [Node.js](https://nodejs.org/en) before
 
 * Download this repository via `git clone` or from [Releases]("https://github.com/skyling0299/2023CyCraft_intern/blob/release")
 
@@ -95,7 +97,6 @@ Due to the project translate the content using OpenAI, user have to generate a k
  
 [popup.html](https://github.com/skyling0299/2023CyCraft_intern/blob/main/client/scripts/popup.html): layout of popup
 
-insert the gifs here
 
 #### [content.js](https://github.com/skyling0299/2023CyCraft_intern/blob/main/client/scripts/content.js)
 
@@ -143,7 +144,7 @@ the max token is 2049 in OpenAI model ```davinci-002```
 
 ### Rate Limit
 
-OpenAI has [rate limit]("https://platform.openai.com/docs/guides/rate-limits/overview") of 60 request per min, and max token per minute according to the model.  
+OpenAI has [rate limit]("https://platform.openai.com/docs/guides/rate-limits/overview") of 60 request per minute, and max token per minute according to the model.  
 
 Accourding the recommended soloution on the document, it says we can use exponential backoff to retry the request. During the development, I rarely encounter rate limit, so it is not **very neccessary** to me to solve the problem.  
 With the new model ```GPT-4```, it can have 200 request per mininute, despite it can not be used now, but the rate limit may increase in the future.
