@@ -6,10 +6,21 @@ A [**Chrome Extension**](https://developer.chrome.com/docs/extensions/) designed
 - translate the user selected content to traditional Chinese
 - using [**OPENAI API**](https://platform.openai.com/docs) to do translation
 
-<img src="https://github.com/skyling0299/https://github.com/skyling0299/2023CyCraft_intern/blob/backend_ver/assets/translate.gif" width='100%' height='100%'/>
-<img src="https://github.com/skyling0299/https://github.com/skyling0299/2023CyCraft_intern/blob/backend_ver/assets/selected.gif" width='100%' height='100%'/>
+<img src="https://github.com/skyling0299/2023CyCraft_intern/blob/main/assets/translate.gif" width='100%' height='100%'/>
+<img src="https://github.com/skyling0299/2023CyCraft_intern/blob/main/assets/selected.gif" width='100%' height='100%'/>
 
 ## Overview
+
+1. [**How To Use**](https://github.com/skyling0299/2023CyCraft_intern#how-to-use)
+   - [On Your Computer](https://github.com/skyling0299/2023CyCraft_intern#on-your-computer)
+2. [**Architecture Design & Explanation**](https://github.com/skyling0299/2023CyCraft_intern#architecture-design--explanation)
+   - [Client side](https://github.com/skyling0299/2023CyCraft_intern#client-side-1)：frontend of Chrome extension
+   - [Server side](https://github.com/skyling0299/2023CyCraft_intern#server-side-1)：send request to OpenAI
+3. [**More about this project**](https://github.com/skyling0299/2023CyCraft_intern#more-about-this-project)
+   - [Rate Limit](https://github.com/skyling0299/2023CyCraft_intern#rate-limit)
+   - [Problems in develop](https://github.com/skyling0299/2023CyCraft_intern#problems-in-develop)
+   - [To be improved](https://github.com/skyling0299/2023CyCraft_intern#to-be-improved)
+   - [Conclusive and Timeline](https://github.com/skyling0299/2023CyCraft_intern#conclusive-and-timeline)
 
 ## How To Use
 
@@ -17,7 +28,7 @@ A [**Chrome Extension**](https://developer.chrome.com/docs/extensions/) designed
 
 * Your computer should have downloaded [Node.js](https://nodejs.org/en) before（Node >= 14.0.0 and npm >= 5.6）
 
-* Download this repository via `git clone` or from [Releases]("https://github.com/skyling0299/2023CyCraft_intern/blob/release")???
+* Download this repository via `git clone` or from [Releases]("https://github.com/skyling0299/2023CyCraft_intern/blob/release")
 
 ```shell
 git clone 
@@ -65,7 +76,7 @@ Due to the project translate the content using OpenAI, user have to generate a k
 
 3. fill in the key into the input blank
 
-<img src="https://github.com/skyling0299/https://github.com/skyling0299/2023CyCraft_intern/blob/backend_ver/assets/popup.gif" width='100%' height='100%'/>
+<img src="https://github.com/skyling0299/2023CyCraft_intern/blob/main/assets/popup.gif" width='100%' height='100%'/>
 
 
 ## Architecture Design & Explanation
@@ -82,11 +93,11 @@ Due to the project translate the content using OpenAI, user have to generate a k
   
 * the message and key will be sent to ```content.js``` by chrome extension's api  ```chrome.tabs.sendMessage```
  
-[popup.html]("https://github.com/skyling0299/https://github.com/skyling0299/2023CyCraft_intern/blob/backend_ver/scripts/popup.html"): layout of popup
+[popup.html](https://github.com/skyling0299/2023CyCraft_intern/blob/main/client/scripts/popup.html): layout of popup
 
 insert the gifs here
 
-#### [content.js]("https://github.com/skyling0299/https://github.com/skyling0299/2023CyCraft_intern/blob/backend_ver/scripts/content.js")
+#### [content.js](https://github.com/skyling0299/2023CyCraft_intern/blob/main/client/scripts/content.js)
 
 1. collect DOM nodes, get selection text, show the translate result
 
@@ -121,7 +132,7 @@ the max token is 2049 in OpenAI model ```davinci-002```
  
 ### Server Side
 
-#### [index.js]("") : OpenAI api calling and api key updating
+#### [index.js](https://github.com/skyling0299/2023CyCraft_intern/blob/main/server/index.js) : OpenAI api calling and api key updating
 
 * ```POST /set``` : set api key by configure ```.env``` file, reload ```OpenAIApi``` to get latest api key
 
@@ -147,7 +158,7 @@ With the new model ```GPT-4```, it can have 200 request per mininute, despite it
         
         剛開始對於翻譯的構想是可以將翻譯完的文字放回原本的位置(取代原本的語言)，因此一開始我想傳入 array 物件  
         
-        根據[Open AI documet of parameters]("https://platform.openai.com/docs/api-reference/completions/create") 以及 [Open AI error mitigation]("https://platform.openai.com/docs/guides/rate-limits/error-mitigation")     這兩個文件，我認為可以嘗試傳入物件，回傳的物件將會是 array ，如此一來對照 DOM     節點與翻譯出來的文字節點就能無誤差的把 Open AI 翻譯的結果帶回網頁。
+        根據[Open AI documet of parameters]("https://platform.openai.com/docs/api-reference/completions/create") 以及 [Open AI error mitigation]("https://platform.openai.com/docs/guides/rate-limits/error-mitigation")     這兩個文件，我認為可以嘗試傳入物件，回傳的物件將會是 array ，如此一來對照 DOM節點與翻譯出來的文字節點就能無誤差的把 Open AI 翻譯的結果帶回網頁。
  
         * 問題難點:
         
@@ -278,7 +289,7 @@ With the new model ```GPT-4```, it can have 200 request per mininute, despite it
 3. 不使用後端的方法: 
 
     倘若不使用後端，理應也能完成這次作業:
-    * 使用 [chrome.storage]("https://developer.chrome.com/docs/extensions/reference/storage/")，儲存 API KEY
+    * 使用 [chrome.storage](https://developer.chrome.com/docs/extensions/reference/storage/)，儲存 API KEY
     * 針對```Refused to set unsafe header "User-Agent"```的問題，我會想嘗試將字串送到 ```background.js``` 發送，或直接```fetch('https://api.openai.com/v1/completions')``` 避免這個問題。
     * ```fetch('https://api.openai.com/v1/completions')``` 在先前嘗試純前端時有試過，是能夠成功發送訊息(即不使用 node.js 的 openAI module)，可證明不使用後端應該也可以完成作業。
     
