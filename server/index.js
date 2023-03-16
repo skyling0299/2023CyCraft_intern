@@ -24,10 +24,7 @@ function setEnvValue(key, value) {
     }));
     ENV_VARS.splice(target, 1, `${key} = "${value}"`);
     fs.writeFileSync("./.env", ENV_VARS.join(os.EOL));
-    const configuration = new Configuration({
-        apiKey: process.env.OPENAI_API_KEY,
-    });
-    openai = new OpenAIApi(configuration);
+    
 }
 
 
@@ -36,21 +33,19 @@ app.use(cors());
 app.use(express.json())
 
 app.get('/set', function (req, res) {
-    res.send('Hello World');
+    res.send('Running...');
  });
 
 app.post('/set', async(req, res) =>{
-    console.log(req.body.key.content)
     setEnvValue("OPENAI_API_KEY", req.body.key.content);
     const configuration = new Configuration({
-        apiKey: process.env.OPENAI_API_KEY,
+        apiKey: req.body.key.content,
     });
     openai = new OpenAIApi(configuration);
-    res.status(200).send("i got it")
+    res.status(200).send("success")
 })
 
 app.post('/', async(req, res) => {
-  
     try{
         const prompts = req.body.prompt
         const response = await openai.createCompletion({

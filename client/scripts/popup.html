@@ -1,14 +1,22 @@
 <html>
   <head>
     <title>Translation</title>
-  </head>
-  <body>
-        <script src="popup.js"></script>
-        <h1>API KEY</h1>
+    <link rel="stylesheet" href="../assets/bootstrap.css" />
 
-            <input type="password" id="apiKey" name="apiKey" placeholder="please enter your openai api_key"/>
-            <button type="submit" name="submit" id="save">save</button>
-            <button name="translate" id="translate">translate</button>
+  </head>
+  <body class="container text-center"  >
+        <script src="popup.js"></script>
+        
+            <h1 class="row">API KEY</h1>
+            <p> 
+              you can get your api key <a href="https://platform.openai.com/account/api-keys">here</a>
+            </p>
+            <input type="password" id="apiKey" name="apiKey" placeholder="please enter your openai api_key" class="input-sm input row-5" size="30" style="padding: 10px;">
+            <div class="row"> 
+              <button type="submit" name="submit" id="save" class="col btn btn-success">save</button>
+              <button name="translate" id="translate" class="col btn btn-primary">translate</button>
+            </div>
+        
         
         
   </body>

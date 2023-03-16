@@ -30,7 +30,7 @@ function getTextNodeList(dom){
         const current_node = NodeList[0]
         NodeList.shift()
         if(current_node.outerHTML){
-            if(current_node.outerHTML.match(/^<code[^><]*?>[\s\S]+<\/code>$/) || current_node.outerHTML.match(/^<script[^><]*?>[\s\S]+<\/script>$/) ){
+            if(current_node.outerHTML.match(/^<code[^><]*?>[\s\S]+<\/code>$/) || current_node.outerHTML.match(/^<script[^><]*?>[\s\S]+<\/script>$/) || current_node.outerHTML.match(/^<style[^><]*?>[\s\S]+<\/style>$/) ){
             }
             else if(current_node.children.length == 0){ //node has no element child
                 if((current_node.innerText != null)){
@@ -129,8 +129,6 @@ async function translatingRequest(content, subList){
     })
 }
 function replaceTranslatedNodes(content, nodeList, original){
-    console.log(content)
-    console.log(nodeList)
     if(content){
         if(content.length === nodeList.length){
             for(let i = 0; i< nodeList.length; i++){
@@ -143,8 +141,6 @@ function replaceTranslatedNodes(content, nodeList, original){
             }
         }
         else if(nodeList.length > 1){
-            console.log(original.length)
-            console.log(original, nodeList) 
             translatingRequest(original.slice(0, Math.floor(original.length/2)), nodeList.slice(0, Math.floor(nodeList.length/2)))
             translatingRequest(original.slice(Math.floor(original.length/2), original.length), nodeList.slice(Math.floor(nodeList.length/2), nodeList.length))
         }
@@ -174,11 +170,12 @@ function showTranslated(text, oRect){
     translateHelper.style.top =  window.pageYOffset + oRect.top + oRect.height + "px";
     translateHelper.style.zIndex = "2147483647"
     translateHelper.style.width = "400px"
-    translateHelper.style.padding = "4px"
+    translateHelper.style.padding = "10px"
     translateHelper.style.borderWidth = "4px"
-    translateHelper.style.borderColor = "black"
-    translateHelper.style.backgroundColor = "#DDDDDD"
+    translateHelper.style.borderColor = "#FFFFFF"
+    translateHelper.style.backgroundColor = "#E8FFF5"
     translateHelper.style.borderRadius = "3%"
+    translateHelper.style.overflow = "scroll"
     translateHelper.id = "translator_show"  
     translateHelper.appendChild(translateText)
     body.appendChild(translateHelper)
@@ -194,12 +191,12 @@ function addIcon(selection, text){
     const oRect = oRange.getBoundingClientRect();
     helper.style.position = "absolute"
     helper.style.zIndex = "2147483647"
-    helper.style.width = "20px"
-    helper.style.height = "20px"
+    helper.style.width = "25px"
+    helper.style.height = "25px"
     helper.style.cursor = "pointer"
-    helper.style.backgroundColor = "#DDDDDD"
-    helper.style.padding = "3px"
-    helper.style.borderRadius = "3%"
+    helper.style.backgroundColor = "#ADFEDC"
+    helper.style.padding = "5px"
+    helper.style.borderRadius = "10%"
     helper.style.left = oRect.x + "px";
     helper.style.top =  window.pageYOffset + oRect.top*0.9  + "px";
     helper.id = "translator_openai"
