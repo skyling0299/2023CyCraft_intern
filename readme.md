@@ -30,7 +30,7 @@ A [**Chrome Extension**](https://developer.chrome.com/docs/extensions/) designed
 
 * Your computer should have downloaded [Node.js](https://nodejs.org/en) before
 
-* Download this repository via `git clone` or from [Releases]("https://github.com/skyling0299/2023CyCraft_intern/blob/release")
+* Download this repository via `git clone` or from [Releases](https://github.com/skyling0299/2023CyCraft_intern/releases/tag/v1.0)
 
 ```shell
 git clone 
@@ -159,7 +159,7 @@ With the new model ```GPT-4```, it can have 200 request per mininute, despite it
         
         剛開始對於翻譯的構想是可以將翻譯完的文字放回原本的位置(取代原本的語言)，因此一開始我想傳入 array 物件  
         
-        根據[Open AI documet of parameters](https://platform.openai.com/docs/api-reference/completions/create) 以及 [Open AI error mitigation]("https://platform.openai.com/docs/guides/rate-limits/error-mitigation) 這兩個文件，我認為可以嘗試傳入物件，回傳的物件將會是 array ，如此一來對照 DOM節點與翻譯出來的文字節點就能無誤差的把 Open AI 翻譯的結果帶回網頁。
+        根據[Open AI documet of parameters](https://platform.openai.com/docs/api-reference/completions/create) 以及 [Open AI error mitigation](https://platform.openai.com/docs/guides/rate-limits/error-mitigation) 這兩個文件，我認為可以嘗試傳入物件，回傳的物件將會是 array ，如此一來對照 DOM節點與翻譯出來的文字節點就能無誤差的把 Open AI 翻譯的結果帶回網頁。
  
         * 問題難點:
         
