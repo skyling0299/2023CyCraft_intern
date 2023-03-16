@@ -200,10 +200,9 @@ With the new model ```GPT-4```, it can have 200 request per mininute, despite it
         剛開始並未設想到後端，僅認為可在 ```Content.js```頁面完成所有請求與回應，因此使用 [Webpack]("") 作為工具，將 node.js 的 module 與原本的 javascript 打包並嘗試使用 OpenAI api。
         
     * 問題難點:
+      1. 根據 CSP 的原則，Webpack 打包後的 ```eval``` 是不被允許的，因此我更改了 ``` webpack.config.js ``` ，使用 ```source map``` 輸出。
         
-        1. 根據 CSP 的原則，Webpack 打包後的 ```eval``` 是不被允許的，因此我更改了 ``` webpack.config.js ``` ，使用 ```source map``` 輸出。
-        
-        2. 解決 CSP 的問題後，OpenAI 可能發現我是透過前端直接發送 API KEY，因此發出錯誤訊息
+      2. 解決 CSP 的問題後，OpenAI 可能發現我是透過前端直接發送 API KEY，因此發出錯誤訊息
         ```
         Refused to set unsafe header "User-Agent"
         ```
