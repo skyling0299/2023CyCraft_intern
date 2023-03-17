@@ -6,6 +6,7 @@ A [**Chrome Extension**](https://developer.chrome.com/docs/extensions/) designed
 - translate the user selected content to traditional Chinese
 - using [**OPENAI API**](https://platform.openai.com/docs) to do translation
 
+
 <img src="https://github.com/skyling0299/2023CyCraft_intern/blob/main/assets/translate.gif" width='100%' height='100%'/>
 
 
@@ -18,7 +19,8 @@ A [**Chrome Extension**](https://developer.chrome.com/docs/extensions/) designed
 2. [**Architecture Design & Explanation**](https://github.com/skyling0299/2023CyCraft_intern#architecture-design--explanation)
    - [Client side](https://github.com/skyling0299/2023CyCraft_intern#client-side-1)：frontend of Chrome extension
    - [Server side](https://github.com/skyling0299/2023CyCraft_intern#server-side-1)：send request to OpenAI
-3. [**More about this project**](https://github.com/skyling0299/2023CyCraft_intern#more-about-this-project)
+3. [**Trouble shooting**](https://github.com/skyling0299/2023CyCraft_intern/edit/main/readme.md#trouble-shooting)
+4. [**More about this project**](https://github.com/skyling0299/2023CyCraft_intern#more-about-this-project)
    - [Rate Limit](https://github.com/skyling0299/2023CyCraft_intern#rate-limit)
    - [Problems in develop](https://github.com/skyling0299/2023CyCraft_intern#problems-in-develop)
    - [To be improved](https://github.com/skyling0299/2023CyCraft_intern#to-be-improved)
@@ -139,15 +141,32 @@ the max token is 2049 in OpenAI model ```davinci-002```
 
 * ```POST /``` : create completion of OpenAI by ```openai.createCompletion```, send coresponding message to Client Side
 
- 
+## Trouble shooting
+
+1. I have clicked on the translate button, but nothing happend?
+
+   * Check if you have filled correct API key
+   
+   * Check if you have start the server
+   
+   * translate feature will take about 20-30 sec, please wait for a while
+
+2. After I clicked the translate button, nothing happend and I opened console page. It shows a lot of ```429 too many request```, what can I do?
+
+   * The problem may occured when you exceed the **Free trial usage** of 18 USD dollars, just change an unused account and set in the key again.
+      you can go to [OpenAI usage](https://platform.openai.com/account/usage) to check your usage.
+      
+   * If still occured, please report what you are viewing. I will check the problem and fix it.
+
 ## More about this project
 
 ### Rate Limit
 
 OpenAI has [rate limit](https://platform.openai.com/docs/guides/rate-limits/overview) of 60 request per minute, and max token per minute according to the model.  
 
-Accourding the recommended soloution on the document, it says we can use exponential backoff to retry the request. During the development, I rarely encounter rate limit, so it is not **very neccessary** to me to solve the problem.  
+According to the recommended solution on the document, it says we can use exponential backoff to retry the request. During the development, I rarely encounter rate limit, so it is not **very neccessary** to me to solve the problem.  
 With the new model ```GPT-4```, it can have 200 request per mininute, despite it can not be used now, but the rate limit may increase in the future.
+
 
 ### Problems in develop
 
