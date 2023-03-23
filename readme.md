@@ -1,4 +1,4 @@
-# Cycraft intern homework 2023
+# Chrome extension translate tool using OpenAI
 
 A [**Chrome Extension**](https://developer.chrome.com/docs/extensions/) designed with [Express](https://expressjs.com/zh-tw/) and [OpenAI](https://platform.openai.com/) that could：
 
